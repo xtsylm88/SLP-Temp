@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Layanan Pendampingan",
+  "description": "Sistem layanan pendampingan berbasis web dengan React, Express, dan Google Workspace integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
