@@ -9,10 +9,14 @@ import {
   IconButton,
   Box,
   Chip,
+  Stack,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import SearchIcon from '@mui/icons-material/Search';
+import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
@@ -29,18 +33,18 @@ export const Navbar: React.FC = () => {
       color="default"
       elevation={0}
       sx={{
-        backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e2e8f0',
+        backgroundColor: '#FFFFFF',
+        borderBottom: '1px solid #C8D2E3',
       }}
     >
-      <Toolbar sx={{ height: 72, px: { xs: 2, md: 4 } }}>
+      <Toolbar sx={{ height: 64, px: { xs: 2, md: 4 } }}>
         {isAdminView && (
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             onClick={toggleSidebar}
-            sx={{ mr: 2, color: 'text.secondary' }}
+            sx={{ mr: 2, color: '#4F5D75' }}
           >
             <MenuIcon />
           </IconButton>
@@ -51,87 +55,130 @@ export const Navbar: React.FC = () => {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: 2,
             cursor: 'pointer',
-            flexGrow: 1,
+            flexGrow: { xs: 1, md: 0 },
+            mr: { md: 4 },
           }}
         >
           <Box
+            component="img"
+            src="https://i.postimg.cc/X7TB6pRf/Chat-GPT-Image-Aug-7-2026-10-25-50-AM.png"
+            alt="Logo BPMP Sumsel"
+            referrerPolicy="no-referrer"
             sx={{
               width: 40,
               height: 40,
-              borderRadius: '12px',
-              bgcolor: 'primary.main',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '1.25rem',
-              boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)',
+              objectFit: 'contain',
+              flexShrink: 0,
             }}
-          >
-            S
-          </Box>
-          <Box>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 800,
-                color: 'text.primary',
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-                fontSize: '1.1rem',
-              }}
-            >
-              Sistem Layanan <span style={{ color: '#4f46e5' }}>Pendampingan</span>
-            </Typography>
-            <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
-              Base Platform Digital
-            </Typography>
-          </Box>
+          />
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        {/* Public Nav Menu Items */}
+        {!isAdminView && (
+          <Stack direction="row" spacing={1} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
+            <Button
+              startIcon={<HomeIcon sx={{ fontSize: 18 }} />}
+              onClick={() => navigate('/')}
+              sx={{
+                color: location.pathname === '/' ? '#1249B8' : '#4F5D75',
+                fontWeight: location.pathname === '/' ? 700 : 500,
+                borderRadius: '6px',
+                textTransform: 'none',
+                backgroundColor: location.pathname === '/' ? '#EBF2FF' : 'transparent',
+                '&:hover': {
+                  backgroundColor: '#EBF2FF',
+                },
+              }}
+            >
+              Beranda
+            </Button>
+            <Button
+              startIcon={<AddTaskIcon sx={{ fontSize: 18 }} />}
+              onClick={() => navigate('/pengajuan')}
+              sx={{
+                color: location.pathname === '/pengajuan' ? '#1249B8' : '#4F5D75',
+                fontWeight: location.pathname === '/pengajuan' ? 700 : 500,
+                borderRadius: '6px',
+                textTransform: 'none',
+                backgroundColor: location.pathname === '/pengajuan' ? '#EBF2FF' : 'transparent',
+                '&:hover': {
+                  backgroundColor: '#EBF2FF',
+                },
+              }}
+            >
+              Ajukan Permohonan
+            </Button>
+            <Button
+              startIcon={<SearchIcon sx={{ fontSize: 18 }} />}
+              onClick={() => navigate('/status')}
+              sx={{
+                color: location.pathname === '/status' ? '#1249B8' : '#4F5D75',
+                fontWeight: location.pathname === '/status' ? 700 : 500,
+                borderRadius: '6px',
+                textTransform: 'none',
+                backgroundColor: location.pathname === '/status' ? '#EBF2FF' : 'transparent',
+                '&:hover': {
+                  backgroundColor: '#EBF2FF',
+                },
+              }}
+            >
+              Cek Status
+            </Button>
+          </Stack>
+        )}
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, ml: 'auto' }}>
           <Chip
             label={userRole === 'ADMIN' ? 'Admin Mode' : 'Public View'}
-            color={userRole === 'ADMIN' ? 'primary' : 'default'}
             size="small"
             sx={{
-              fontWeight: 700,
-              fontSize: '0.75rem',
-              px: 1,
-              bgcolor: userRole === 'ADMIN' ? 'rgba(79, 70, 229, 0.1)' : '#f1f5f9',
-              color: userRole === 'ADMIN' ? 'primary.main' : 'text.secondary',
-              border: 'none',
+              fontWeight: 600,
+              fontSize: '0.65rem',
+              px: 0.5,
+              bgcolor: userRole === 'ADMIN' ? '#EBF2FF' : '#F3F6FB',
+              color: userRole === 'ADMIN' ? '#1249B8' : '#4F5D75',
+              border: '1px solid #C8D2E3',
             }}
           />
 
           {!isAdminView ? (
             <Button
               variant="contained"
-              color="primary"
               size="small"
-              startIcon={<AdminPanelSettingsIcon />}
+              startIcon={<AdminPanelSettingsIcon sx={{ fontSize: 16 }} />}
               onClick={() => {
                 setUserRole('ADMIN');
                 navigate('/admin');
               }}
-              sx={{ borderRadius: '12px', fontWeight: 700 }}
+              sx={{
+                borderRadius: '6px',
+                fontWeight: 600,
+                textTransform: 'none',
+                bgcolor: '#1249B8',
+                color: '#FFFFFF',
+                '&:hover': { bgcolor: '#0A2E73' },
+              }}
             >
               Portal Admin
             </Button>
           ) : (
             <Button
               variant="outlined"
-              color="secondary"
               size="small"
-              startIcon={<ArrowBackIcon />}
+              startIcon={<ArrowBackIcon sx={{ fontSize: 16 }} />}
               onClick={() => {
                 setUserRole('PUBLIC');
                 navigate('/');
               }}
-              sx={{ borderRadius: '12px', fontWeight: 600 }}
+              sx={{
+                borderRadius: '6px',
+                fontWeight: 600,
+                textTransform: 'none',
+                borderColor: '#C8D2E3',
+                color: '#1249B8',
+                '&:hover': { borderColor: '#1249B8', bgcolor: '#EBF2FF' },
+              }}
             >
               Beranda Public
             </Button>
@@ -141,3 +188,4 @@ export const Navbar: React.FC = () => {
     </AppBar>
   );
 };
+

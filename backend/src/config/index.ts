@@ -1,23 +1,20 @@
 // backend/src/config/index.ts
-
-import dotenv from 'dotenv';
-dotenv.config();
+import { envConfig } from './env';
 
 export const config = {
-  port: parseInt(process.env.PORT || '3000', 10),
-  nodeEnv: process.env.NODE_ENV || 'development',
-  appUrl: process.env.APP_URL || 'http://localhost:3000',
+  port: envConfig.port,
+  nodeEnv: envConfig.nodeEnv,
   appsScript: {
-    url: process.env.APPS_SCRIPT_URL || '',
-    secret: process.env.APPS_SCRIPT_SECRET || '',
+    url: envConfig.appsScriptUrl,
+    secret: envConfig.appsScriptSecret,
   },
-  adminEmails: (process.env.ADMIN_EMAILS || '')
-    .split(',')
-    .map((e) => e.trim().toLowerCase())
-    .filter(Boolean),
-  cacheTtlMs: 5 * 60 * 1000, // 5 menit
+  cacheTtlMs: envConfig.cacheTtlMs,
+  healthCacheTtlMs: envConfig.healthCacheTtlMs,
+  timeoutMs: envConfig.timeoutMs,
   rateLimit: {
-    windowMs: 15 * 60 * 1000, // 15 menit
-    max: 100, // max 100 request per windowMs
+    windowMs: envConfig.rateLimitWindowMs,
+    max: envConfig.rateLimitMaxRequests,
   },
 };
+
+export { envConfig };

@@ -26,7 +26,7 @@ var Routes = {
         }, "Authenticated Health Check Successful");
 
       case "getJenisLayanan":
-        var list = MasterService.getJenisLayanan();
+        var list = MasterService.getJenisLayanan(p);
         return Response.success(list);
 
       case "getJenisLayananById":
@@ -35,6 +35,18 @@ var Routes = {
           return Response.notFound("Jenis Layanan dengan ID " + p.id + " tidak ditemukan.");
         }
         return Response.success(jenis);
+
+      case "saveJenis":
+        var saveResult = MasterService.saveJenis(p);
+        return Response.success(saveResult, "Master jenis layanan berhasil disimpan.");
+
+      case "updateJenis":
+        var updateResult = MasterService.updateJenis(p.id, p);
+        return Response.success(updateResult, "Master jenis layanan berhasil diperbarui.");
+
+      case "deleteJenis":
+        var deleteResult = MasterService.deleteJenis(p.id);
+        return Response.success(deleteResult, "Master jenis layanan berhasil dinonaktifkan.");
 
       case "submitPermohonan":
         var submitResult = RequestService.submit(p, traceId);
@@ -47,6 +59,13 @@ var Routes = {
         }
         return Response.success(permohonan);
 
+      case "findPermohonanPublic":
+        var publicData = RequestService.findPublic(p);
+        if (!publicData) {
+          return Response.notFound("Permohonan dengan ID " + p.request_id + " tidak ditemukan.");
+        }
+        return Response.success(publicData);
+
       case "updateStatus":
         var updateResult = RequestService.updateStatus(p, traceId);
         return Response.success(updateResult, "Status permohonan berhasil diperbarui.");
@@ -54,6 +73,33 @@ var Routes = {
       case "softDelete":
         var deleteResult = RequestService.softDelete(p, traceId);
         return Response.success(deleteResult, "Permohonan berhasil dihapus.");
+
+      case "findAdminByEmail":
+        var admin = AdminService.findAdminByEmail(p.email);
+        if (!admin) {
+          return Response.notFound("Administrator dengan email '" + p.email + "' tidak ditemukan.");
+        }
+        return Response.success(admin);
+
+      case "updateLastLogin":
+        var updateLoginResult = AdminService.updateLastLogin(p, traceId);
+        return Response.success(updateLoginResult, "Last login berhasil diperbarui.");
+
+      case "findPermohonanList":
+        var listResult = RequestService.findPermohonanList(p);
+        return Response.success(listResult);
+
+      case "findAuditLogList":
+        var auditListResult = AuditService.findAuditLogList(p);
+        return Response.success(auditListResult);
+
+      case "findAuditTrace":
+        var traceResult = AuditService.findAuditTrace(p);
+        return Response.success(traceResult);
+
+      case "recordAuditEvent":
+        var auditRecordResult = AuditService.recordAuditEvent(p, traceId);
+        return Response.success(auditRecordResult, "Audit event berhasil dicatat.");
 
       default:
         return Response.badRequest("Action '" + action + "' tidak dikenali atau belum didukung.");

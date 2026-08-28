@@ -145,7 +145,8 @@ var SpreadsheetService = {
         logParams.service || "APP_SCRIPT",
         logParams.action || "",
         logParams.message || "",
-        typeof logParams.payload === 'object' ? JSON.stringify(logParams.payload) : (logParams.payload || "")
+        typeof logParams.payload === 'object' ? JSON.stringify(logParams.payload) : (logParams.payload || ""),
+        logParams.actor_email || ""
       ];
       this.append(sheetName, row);
     } catch (e) {
@@ -169,7 +170,7 @@ var SpreadsheetService = {
       },
       {
         name: Config.SHEETS.USER_ADMIN,
-        headers: ['email', 'nama', 'role', 'aktif', 'created_at', 'updated_at']
+        headers: ['email', 'nama', 'role', 'aktif', 'created_at', 'updated_at', 'last_login', 'last_login_ip', 'last_login_trace_id']
       },
       {
         name: Config.SHEETS.SEQUENCE,
@@ -178,7 +179,7 @@ var SpreadsheetService = {
       },
       {
         name: Config.SHEETS.LOG,
-        headers: ['timestamp', 'trace_id', 'request_id', 'level', 'service', 'action', 'message', 'payload']
+        headers: ['timestamp', 'trace_id', 'request_id', 'level', 'service', 'action', 'message', 'payload', 'actor_email']
       }
     ];
 

@@ -10,7 +10,7 @@ export const PublicLayout: React.FC = () => {
   const { notification, hideNotification } = useApp();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: '#F3F6FB' }}>
       <Navbar />
 
       <Box component="main" sx={{ flexGrow: 1 }}>
@@ -20,19 +20,29 @@ export const PublicLayout: React.FC = () => {
       <Box
         component="footer"
         sx={{
-          py: 3,
+          py: 4,
           px: 2,
-          bgcolor: '#ffffff',
-          borderTop: '1px solid #e2e8f0',
+          bgcolor: '#FFFFFF',
+          borderTop: '1px solid #C8D2E3',
           mt: 'auto',
         }}
       >
         <Container maxWidth="lg">
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
-            © {new Date().getFullYear()} Sistem Layanan Pendampingan Berbasis Digital. All rights reserved.
+          <Typography variant="body2" align="center" sx={{ color: '#4F5D75', fontSize: '0.85rem' }}>
+            © {new Date().getFullYear()} Sistem Layanan Pendampingan Digital BPMP Provinsi Sumatera Selatan. Hak cipta dilindungi undang-undang.
           </Typography>
-          <Typography variant="caption" align="center" sx={{ display: 'block', color: 'text.secondary', mt: 0.5 }}>
-            Powered by Google Cloud Run, Express & Google Workspace Integration.
+          <Typography
+            variant="caption"
+            align="center"
+            sx={{
+              display: 'block',
+              color: '#4F5D75',
+              mt: 0.5,
+              fontFamily: '"JetBrains Mono", monospace',
+              fontSize: '0.725rem',
+            }}
+          >
+            Google Cloud Run • Express Gateway • Apps Script Data Core
           </Typography>
         </Container>
       </Box>
@@ -44,7 +54,16 @@ export const PublicLayout: React.FC = () => {
           onClose={hideNotification}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
-          <Alert onClose={hideNotification} severity={notification.type} sx={{ width: '100%' }}>
+          <Alert
+            onClose={hideNotification}
+            severity={notification.type}
+            sx={{
+              width: '100%',
+              borderRadius: '8px',
+              border: '1px solid #C8D2E3',
+              boxShadow: '0 2px 8px rgba(10, 46, 115, 0.08)',
+            }}
+          >
             {notification.message}
           </Alert>
         </Snackbar>
@@ -52,3 +71,4 @@ export const PublicLayout: React.FC = () => {
     </Box>
   );
 };
+

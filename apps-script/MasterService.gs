@@ -5,25 +5,27 @@
 
 var MasterService = {
   /**
-   * Mengambil seluruh daftar jenis layanan aktif
+   * Mengambil daftar jenis layanan (aktif saja atau seluruhnya jika includeInactive = true)
+   * @param {Object} [payload]
    * @returns {Array<Object>}
    */
-  getJenisLayanan: function() {
+  getJenisLayanan: function(payload) {
+    var includeInactive = payload && (payload.includeInactive === true || payload.includeInactive === 'true');
     var sheet = SpreadsheetService.getSheet(Config.SHEETS.MASTER_JENIS_LAYANAN);
     var data = sheet.getDataRange().getValues();
     var result = [];
 
     for (var i = 1; i < data.length; i++) {
       var row = data[i];
-      // Cek apakah aktif (kolom 6 = true atau 1 atau 'TRUE')
-      if (row[5] === true || row[5] === 1 || row[5] === 'TRUE' || row[5] === 'true') {
+      var isAktif = (row[5] === true || row[5] === 1 || row[5] === 'TRUE' || row[5] === 'true');
+      if (includeInactive || isAktif) {
         result.push({
           id: row[0],
           nama: row[1],
           deskripsi: row[2],
           schema_version: row[3],
           field_schema: Utils.parseJson(row[4], []),
-          aktif: true,
+          aktif: isAktif,
           created_at: row[6],
           updated_at: row[7]
         });

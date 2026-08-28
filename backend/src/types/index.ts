@@ -1,16 +1,12 @@
 // backend/src/types/index.ts
 
 import { Request } from 'express';
-import { UserRole } from '../../../shared/types';
+import { JwtPayload } from './auth';
 
-export interface AuthenticatedUser {
-  email: string;
-  name?: string;
-  role: UserRole;
-}
+export type AuthenticatedUser = JwtPayload;
 
 export interface AuthenticatedRequest extends Request {
-  user?: AuthenticatedUser;
+  user?: JwtPayload;
 }
 
 export interface CacheEntry<T> {
